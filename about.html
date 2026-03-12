@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Muse | Crystal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #fdfdfd; --accent: #c5a880; --text: #1a1a1a; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; margin: 0; flex-direction: column; }
+        .about-container { max-width: 600px; text-align: center; animation: fadeIn 2s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); margin-bottom: 30px; }
+        p { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; line-height: 1.8; font-style: italic; font-weight: 300; margin-bottom: 40px; }
+        .back-link { text-decoration: none; color: var(--text); font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; opacity: 0.5; transition: 0.3s; cursor: pointer; }
+        .back-link:hover { opacity: 1; color: var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="about-container">
+        <h1>The Muse</h1>
+        <p>"A soul as clear as her name. This space is a digital exhibition dedicated to the grace and effortless beauty that Crystal carries."</p>
+        <a href="index.html" class="back-link">← Return to Gallery</a>
+    </div>
+
+    <script>
+        // Security check: if she tries to access this page directly without logging in
+        if (localStorage.getItem("crystalLoggedIn") !== "true") {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
