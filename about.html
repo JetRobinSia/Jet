@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Muse | Crystal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #fdfdfd; --accent: #c5a880; --text: #1a1a1a; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            font-family: 'Montserrat', sans-serif; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 40px; 
+            flex-direction: column; 
+        }
+
+        /* Added a frame to match your other pages */
+        .about-container { 
+            max-width: 650px; 
+            text-align: center; 
+            animation: fadeIn 2.5s ease; 
+            background: white;
+            padding: 60px 40px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.03);
+            border-radius: 2px;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        h1 { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: 0.8rem; 
+            letter-spacing: 6px; 
+            text-transform: uppercase; 
+            color: var(--accent); 
+            margin-bottom: 40px; 
+        }
+
+        /* The expanded dedication text */
+        p { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: 1.6rem; 
+            line-height: 1.8; 
+            font-style: italic; 
+            font-weight: 300; 
+            margin-bottom: 30px; 
+            color: #333;
+        }
+
+        .sub-text {
+            font-size: 0.75rem;
+            line-height: 2;
+            letter-spacing: 1px;
+            opacity: 0.6;
+            margin-bottom: 50px;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .back-link { 
+            text-decoration: none; 
+            color: var(--accent); 
+            font-size: 0.6rem; 
+            letter-spacing: 3px; 
+            text-transform: uppercase; 
+            transition: 0.3s; 
+            cursor: pointer; 
+            border: 1px solid var(--accent);
+            padding: 12px 30px;
+        }
+
+        .back-link:hover { 
+            background: var(--accent);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="about-container">
+        <h1>CRYSTAL</h1>
+        
+        <p>"A soul as clear as her name. This space is a digital exhibition dedicated to the grace and effortless beauty that Crystal carries."</p>
+        
+        <div class="sub-text">
+            Every photo in this gallery is a fragment of a story we continue to write. This website was built to preserve the quiet moments and the grand adventures alike—a permanent home for a light that never fades. It is a reminder that while time moves forward, the way I see you remains unchanged.
+        </div>
+
+        <a href="index.html" class="back-link">Return to Gallery</a>
+    </div>
+
+    <script>
+        if (localStorage.getItem("crystalLoggedIn") !== "true") {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

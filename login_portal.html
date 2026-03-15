@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BulSU Portal | Student Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --bulsu-blue: #004a99; --bg: #f4f7f6; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg); font-family: 'Roboto', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+
+        .login-card {
+            background: white; width: 380px; padding: 40px; border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center;
+            z-index: 10; border-top: 5px solid var(--bulsu-blue);
+        }
+
+        h1 { color: var(--bulsu-blue); font-size: 1.5rem; margin-bottom: 25px; }
+        input {
+            width: 100%; padding: 14px; margin-bottom: 15px;
+            border: 1px solid #ccc; border-radius: 5px; outline: none;
+        }
+
+        .btn-submit {
+            width: 100%; padding: 14px; background: var(--bulsu-blue);
+            color: white; border: none; border-radius: 5px; cursor: pointer;
+            font-weight: 500; text-transform: uppercase;
+        }
+
+        /* --- THE SCARY STUFF --- */
+        #jumpscare-overlay {
+            display: none; position: fixed; top: 0; left: 0; 
+            width: 100vw; height: 100vh; background: black; 
+            z-index: 9999; justify-content: center; align-items: center;
+        }
+        
+        #jumpscare-overlay img { 
+            width: 100%; height: 100%; object-fit: cover; 
+        }
+
+        /* Vibration effect for extra scare */
+        .shake {
+            animation: shake 0.1s infinite;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card" id="main-form">
+        <div style="font-size: 2.5rem; margin-bottom: 10px;">🎓</div>
+        <h1>Student Portal</h1>
+        <form onsubmit="event.preventDefault(); startPrank();">
+            <input type="text" placeholder="Student ID Number" required>
+            <input type="password" placeholder="Password" required>
+            <button type="submit" class="btn-submit">Sign In</button>
+        </form>
+    </div>
+
+    <div id="jumpscare-overlay">
+        <img src="J:\2nd year\CRYSTAl\pictures2\unnamed.jpg" class="shake" alt="Jumpscare">
+    </div>
+
+    <audio id="scary-sound">
+        <source src="scream2.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+      function startPrank() {
+    const sound = document.getElementById('scary-sound');
+    const overlay = document.getElementById('jumpscare-overlay');
+    const form = document.getElementById('main-form');
+
+    // Force the audio to load right when the button is clicked
+    sound.load(); 
+    sound.volume = 1.0; 
+
+    // Show the scare
+    form.style.display = 'none';
+    overlay.style.display = 'flex';
+
+    // Play and check for errors
+    sound.play().then(() => {
+        console.log("Audio playing successfully!");
+    }).catch(err => {
+        console.error("Audio failed to play. Error:", err);
+        alert("Audio error: Make sure scream.mp3 is in the right folder!");
+    });
+
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 3000);
+}
+    </script>
+</body>
+</html>

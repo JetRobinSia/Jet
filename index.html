@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Art of You | Crystal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fdfdfd;
+            --accent: #c5a880;
+            --text: #1a1a1a;
+            --card-bg: #ffffff; 
+            --sidebar-bg: #ffffff;
+        }
+
+        /* --- UPDATED PREMIUM PURPLE THEME --- */
+        body.purple-theme {
+            --bg: #0f0c13;
+            --accent: #bf94ff;
+            --text: #e0dced;
+            --card-bg: #1d1826;
+            --sidebar-bg: #0f0c13;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.5s ease, color 0.5s ease; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+
+        /* --- MAGIC EFFECTS --- */
+        .sparkle { position: fixed; background: white; border-radius: 50%; pointer-events: none; z-index: 10000; animation: drift linear infinite; }
+        @keyframes drift { from { transform: translateY(-10vh) scale(0); opacity: 1; } to { transform: translateY(100vh) scale(1); opacity: 0; } }
+
+        /* --- PROGRESS BAR --- */
+        #progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 4px; background: transparent; z-index: 1000; }
+        #progress-bar { height: 100%; background: var(--accent); width: 0%; transition: width 0.1s; }
+
+        /* --- SIDEBAR NAVIGATION --- */
+        .sidebar { 
+            position: fixed; left: -250px; top: 0; width: 250px; height: 100%; 
+            background: var(--sidebar-bg); border-right: 1px solid rgba(128,128,128,0.1); transition: 0.5s; 
+            z-index: 3000; padding: 60px 20px; display: flex; flex-direction: column; gap: 20px; 
+        }
+        .sidebar.active { left: 0; }
+        .sidebar a, .theme-btn { text-decoration: none; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--text); transition: 0.3s; background: none; border: none; text-align: left; cursor: pointer; padding: 5px 0; }
+        .sidebar a:hover, .theme-btn:hover { color: var(--accent); padding-left: 10px; }
+        
+        .menu-toggle { 
+            position: fixed; top: 20px; left: 20px; z-index: 3100; cursor: pointer; 
+            font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; 
+            color: var(--accent); display: none; 
+        }
+
+        /* --- LOGIN SECTION --- */
+        #auth-section { height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; background: var(--bg); z-index: 2000; position: relative; }
+        .auth-content h1 { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 300; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 20px; }
+        .auth-content p { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 30px; opacity: 0.6; }
+        
+        input[type="date"] {
+            background: transparent; border: 1px solid rgba(128,128,128,0.3); padding: 12px; width: 250px;
+            text-align: center; outline: none; font-family: 'Montserrat', sans-serif;
+            color: var(--text); border-radius: 4px; transition: 0.5s; cursor: pointer;
+        }
+        input[type="date"]:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(191, 148, 255, 0.1); }
+
+        .enter-btn { display: block; margin: 30px auto; background: none; border: 1px solid var(--accent); padding: 12px 50px; color: var(--accent); cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-size: 0.7rem; transition: 0.4s; }
+        .enter-btn:hover { background: var(--accent); color: var(--bg); }
+
+        /* --- GALLERY SECTION --- */
+        #gallery-section { display: none; padding: 100px 10%; animation: pageFade 1.5s ease; }
+        @keyframes pageFade { from { opacity: 0; } to { opacity: 1; } }
+        
+        .header { text-align: center; margin-bottom: 60px; opacity: 0; transform: translateY(20px); transition: 1s forwards; }
+        .header.visible { opacity: 1; transform: translateY(0); }
+        .header h2 { font-family: 'Cormorant Garamond', serif; font-size: 4.5rem; font-weight: 300; font-style: italic; }
+
+        .masonry { column-count: 2; column-gap: 60px; max-width: 1200px; margin: 0 auto; }
+
+        .card { 
+            break-inside: avoid; margin-bottom: 60px; opacity: 0; transform: translateY(30px); transition: 1s;
+            padding: 15px; background-color: var(--card-bg); border-radius: 4px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); 
+        }
+        .card.visible { opacity: 1; transform: translateY(0); }
+        .card img { width: 100%; border-radius: 2px; transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1); }
+        .card:hover img { transform: scale(1.02); }
+
+        .caption { margin-top: 20px; font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; text-align: center; opacity: 0.8; }
+
+        footer { margin-top: 100px; text-align: center; padding-bottom: 50px; opacity: 0; transition: 2s; }
+        @media (max-width: 768px) { .masonry { column-count: 1; } .header h2 { font-size: 3rem; } }
+    </style>
+</head>
+<body id="main-body">
+
+    <div id="progress-container"><div id="progress-bar"></div></div>
+
+    <div class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()">Menu</div>
+    <div class="sidebar" id="sidebar">
+        <h2 style="font-size: 0.6rem; letter-spacing: 3px; opacity: 0.4; margin-bottom: 10px;">TIMELINE</h2>
+        <a href="year1.html">First Year</a>
+        <a href="year2.html">Second Year</a>
+        <a href="year3.html">Present</a>
+        
+        <h2 style="font-size: 0.6rem; letter-spacing: 3px; opacity: 0.4; margin-bottom: 10px; margin-top: 15px;">STORY</h2>
+        <a href="about.html">About</a>
+
+        <h2 style="font-size: 0.6rem; letter-spacing: 3px; opacity: 0.4; margin-bottom: 10px; margin-top: 15px;">MAGIC</h2>
+        <button class="theme-btn" onclick="toggleTheme()">✨ Switch Theme</button>
+
+        <a href="#" onclick="logout()" style="margin-top: auto; font-size: 0.8rem; opacity: 0.5;">Logout</a>
+    </div>
+
+    <section id="auth-section">
+        <div class="auth-content">
+            <h1>CRYSTAL</h1>
+            <p>Pick the date it all began</p>
+            <input type="date" id="datePicker">
+            <button class="enter-btn" onclick="reveal()">Unlock</button>
+        </div>
+    </section>
+
+    <section id="gallery-section">
+        <div class="header" id="header">
+            <h2>The Art of You</h2>
+            <p style="letter-spacing: 4px; font-size: 0.6rem; text-transform: uppercase; margin-top: 10px;">Crystal</p>
+        </div>
+
+        <div class="masonry">
+            <div class="card"><img src="J:\2nd year\CRYSTAl\pictures\SNQP1798.JPG"><p class="caption">Elegance in every frame.</p></div>
+            <div class="card"><img src="J:\2nd year\CRYSTAl\pictures\IMG_4685.jpg"><p class="caption">Golden memories.</p></div>
+            <div class="card"><img src="J:\2nd year\CRYSTAl\pictures\IMG_E2015.JPG"><p class="caption">A smile that heals.</p></div>
+            <div class="card"><img src="J:\2nd year\CRYSTAl\pictures\IMG_7675.jpg"><p class="caption">Lost in your eyes.</p></div>
+            <div class="card"><img src="J:\2nd year\CRYSTAl\pictures\IMG_E7429.jpg"><p class="caption">Purest form of art.</p></div>
+            <div class="card"><img src="J:\2nd year\CRYSTAl\pictures\IMG_E3643.JPG"><p class="caption">Timeless grace.</p></div>
+        </div>
+
+        <footer id="final-footer">
+            <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-style: italic; color: var(--accent); margin-bottom: 40px;">Endless beauty in every detail.</p>
+            <button onclick="logout()" style="text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 12px 35px; transition: 0.4s; cursor: pointer; background: none;">Exit Gallery</button>
+        </footer>
+    </section>
+
+    <script>
+        let sparkleInterval;
+
+        function toggleTheme() {
+            const body = document.getElementById('main-body');
+            body.classList.toggle('purple-theme');
+            
+            const isPurple = body.classList.contains('purple-theme');
+            localStorage.setItem("themePreference", isPurple ? "purple" : "light");
+
+            if (isPurple) {
+                startSparkles();
+            } else {
+                stopSparkles();
+            }
+        }
+
+        function startSparkles() {
+            if (sparkleInterval) clearInterval(sparkleInterval);
+            sparkleInterval = setInterval(() => {
+                const s = document.createElement('div');
+                s.classList.add('sparkle');
+                const size = Math.random() * 3 + 1 + 'px';
+                s.style.width = size; s.style.height = size;
+                s.style.left = Math.random() * 100 + 'vw';
+                s.style.animationDuration = Math.random() * 3 + 2 + 's';
+                document.body.appendChild(s);
+                setTimeout(() => s.remove(), 5000);
+            }, 200);
+        }
+
+        function stopSparkles() {
+            clearInterval(sparkleInterval);
+            document.querySelectorAll('.sparkle').forEach(s => s.remove());
+        }
+
+        function reveal() {
+            const selectedDate = document.getElementById('datePicker').value;
+            if(selectedDate === "2023-05-04") {
+                localStorage.setItem("crystalLoggedIn", "true");
+                showGallery();
+            } else { 
+                alert("That isn't the date, love. Try again."); 
+            }
+        }
+
+        function showGallery() {
+            document.getElementById('auth-section').style.display = 'none';
+            document.getElementById('gallery-section').style.display = 'block';
+            document.getElementById('menu-toggle').style.display = 'block';
+            
+            setTimeout(() => {
+                document.getElementById('header').classList.add('visible');
+                const cards = document.querySelectorAll('.card');
+                cards.forEach((card, index) => {
+                    setTimeout(() => card.classList.add('visible'), index * 150);
+                });
+                setTimeout(() => { document.getElementById('final-footer').style.opacity = "1"; }, 1500);
+            }, 100);
+        }
+
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+
+        function logout() {
+            localStorage.removeItem("crystalLoggedIn");
+            location.reload();
+        }
+
+        window.onload = function() {
+            if (localStorage.getItem("crystalLoggedIn") === "true") showGallery();
+            if (localStorage.getItem("themePreference") === "purple") {
+                document.getElementById('main-body').classList.add('purple-theme');
+                startSparkles();
+            }
+        };
+
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById("progress-bar").style.width = (winScroll / height) * 100 + "%";
+        };
+    </script>
+</body>
+</html>

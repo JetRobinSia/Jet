@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year One | The Beginning</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --bg: #fdfdfd; 
+            --accent: #c5a880; 
+            --text: #1a1a1a; 
+            --card-bg: #ffffff;
+        }
+
+        /* --- PURPLE THEME VARIABLES --- */
+        body.purple-theme {
+            --bg: #0f0c13;
+            --accent: #bf94ff;
+            --text: #e0dced;
+            --card-bg: #1d1826;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.5s ease, color 0.5s ease; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+
+        /* --- MAGIC EFFECTS --- */
+        .sparkle { position: fixed; background: white; border-radius: 50%; pointer-events: none; z-index: 10000; animation: drift linear infinite; }
+        @keyframes drift { from { transform: translateY(-10vh) scale(0); opacity: 1; } to { transform: translateY(100vh) scale(1); opacity: 0; } }
+
+        .back-nav { position: fixed; top: 20px; left: 20px; z-index: 1000; }
+        .back-link { text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 5px; transition: 0.3s; }
+        .back-link:hover { color: var(--text); border-color: var(--text); }
+
+        header { height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 10%; }
+        header h1 { font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-weight: 300; font-style: italic; margin-bottom: 20px; }
+        header p { max-width: 600px; line-height: 1.8; opacity: 0.8; font-size: 0.9rem; }
+
+        .timeline-gallery { max-width: 800px; margin: 0 auto 100px; padding: 0 5%; }
+
+        .moment { 
+            display: flex; 
+            flex-direction: column; 
+            margin-bottom: 120px; 
+            padding: 20px; 
+            background: var(--card-bg); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03); 
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 1.2s all ease-out;
+        }
+
+        .moment.reveal { opacity: 1; transform: translateY(0); }
+
+        .moment img { 
+            width: 100%; 
+            border-radius: 2px; 
+            margin-bottom: 30px; 
+            filter: brightness(96%);
+            transition: 0.8s;
+        }
+        
+        .moment:hover img {
+            filter: brightness(105%);
+            transform: scale(1.01);
+        }
+
+        .moment-info { text-align: right; padding: 0 10px; }
+        .moment:nth-child(even) .moment-info { text-align: left; }
+        
+        .moment-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; margin-bottom: 10px; font-weight: 300; }
+        .moment-info p { font-size: 0.8rem; letter-spacing: 1px; opacity: 0.6; font-style: italic; }
+
+        footer { text-align: center; padding-bottom: 80px; }
+        .next-year { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; text-decoration: none; color: var(--text); transition: 0.4s; }
+        .next-year:hover { color: var(--accent); }
+    </style>
+</head>
+<body id="main-body">
+
+    <nav class="back-nav">
+        <a href="index.html" class="back-link">← Return to Gallery</a>
+    </nav>
+
+    <header>
+        <h1>2023: The Beginning</h1>
+        <p>A collection of the first smiles, the first dates, and the moment I realized you were the one. This year changed everything.</p>
+    </header>
+
+    <section class="timeline-gallery">
+        <div class="moment">
+            <img src="J:\2nd year\CRYSTAl\pictures\FDYG1991.jpg" alt="First Date">
+            <div class="moment-info">
+                <h3>Our Very First Date</h3>
+                <p>May 04, 2023 • The day the story started.</p>
+            </div>
+        </div>
+
+        <div class="moment">
+            <img src="J:\2nd year\CRYSTAl\pictures\IMG_E8218.JPG" alt="Memories">
+            <div class="moment-info">
+                <h3>Late Night Talks</h3>
+                <p>June 2023 • When hours felt like minutes.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p style="font-size: 0.6rem; letter-spacing: 3px; margin-bottom: 20px; opacity: 0.5;">CONTINUE THE JOURNEY</p>
+        <a href="year2.html" class="next-year">Onto Year Two →</a>
+    </footer>
+
+    <script>
+        // Check Login
+        if (localStorage.getItem("crystalLoggedIn") !== "true") {
+            window.location.href = "index.html";
+        }
+
+        // Apply Theme
+        if (localStorage.getItem("themePreference") === "purple") {
+            document.getElementById('main-body').classList.add('purple-theme');
+            startSparkles();
+        }
+
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.moment').forEach(el => observer.observe(el));
+
+        function startSparkles() {
+            setInterval(() => {
+                const s = document.createElement('div');
+                s.classList.add('sparkle');
+                const size = Math.random() * 3 + 1 + 'px';
+                s.style.width = size; s.style.height = size;
+                s.style.left = Math.random() * 100 + 'vw';
+                s.style.animationDuration = Math.random() * 3 + 2 + 's';
+                document.body.appendChild(s);
+                setTimeout(() => s.remove(), 5000);
+            }, 300);
+        }
+    </script>
+</body>
+</html>
