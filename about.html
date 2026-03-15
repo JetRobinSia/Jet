@@ -124,33 +124,32 @@
 
     <script>
         // Security Check
-        if (localStorage.getItem("crystalLoggedIn") !== "true") {
-            window.location.href = "gallery.html";
+       if (localStorage.getItem("crystalLoggedIn") !== "true") {
+        window.location.href = "index.html"; 
+    }
+
+    // THEME HANDLING (Restored for consistency)
+    let sparkleInterval;
+    function startSparkles() {
+        if (sparkleInterval) clearInterval(sparkleInterval);
+        sparkleInterval = setInterval(() => {
+            const s = document.createElement('div');
+            s.classList.add('sparkle');
+            const size = Math.random() * 3 + 1 + 'px';
+            s.style.width = size; s.style.height = size;
+            s.style.left = Math.random() * 100 + 'vw';
+            s.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(s);
+            setTimeout(() => s.remove(), 5000);
+        }, 200);
+    }
+
+    window.onload = function() {
+        if (localStorage.getItem("themePreference") === "purple") {
+            document.getElementById('main-body').classList.add('purple-theme');
+            startSparkles();
         }
-
-        // Theme Handling
-        let sparkleInterval;
-
-        function startSparkles() {
-            if (sparkleInterval) clearInterval(sparkleInterval);
-            sparkleInterval = setInterval(() => {
-                const s = document.createElement('div');
-                s.classList.add('sparkle');
-                const size = Math.random() * 3 + 1 + 'px';
-                s.style.width = size; s.style.height = size;
-                s.style.left = Math.random() * 100 + 'vw';
-                s.style.animationDuration = Math.random() * 3 + 2 + 's';
-                document.body.appendChild(s);
-                setTimeout(() => s.remove(), 5000);
-            }, 200);
-        }
-
-        window.onload = function() {
-            if (localStorage.getItem("themePreference") === "purple") {
-                document.getElementById('main-body').classList.add('purple-theme');
-                startSparkles();
-            }
-        };
-    </script>
+    };
+</script>
 </body>
 </html>
